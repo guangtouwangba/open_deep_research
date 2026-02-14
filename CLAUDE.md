@@ -1,66 +1,70 @@
-# Open Deep Research Repository Overview
+# DeepSearch CLI - Repository Overview
 
 ## Project Description
-Open Deep Research is a configurable, fully open-source deep research agent that works across multiple model providers, search tools, and MCP (Model Context Protocol) servers. It enables automated research with parallel processing and comprehensive report generation.
+DeepSearch is a command-line deep research tool powered by AI agents. It automates research workflows with parallel processing, source verification, and comprehensive report generation.
 
 ## Repository Structure
 
 ### Root Directory
-- `README.md` - Comprehensive project documentation with quickstart guide
+- `README.md` - Project documentation and usage guide
 - `pyproject.toml` - Python project configuration and dependencies
-- `langgraph.json` - LangGraph configuration defining the main graph entry point
-- `uv.lock` - UV package manager lock file
 - `LICENSE` - MIT license
-- `.env.example` - Environment variables template (not tracked)
+- `.env.example` - Environment variables template
 
-### Core Implementation (`src/open_deep_research/`)
-- `deep_researcher.py` - Main LangGraph implementation (entry point: `deep_researcher`)
-- `configuration.py` - Configuration management and settings
-- `state.py` - Graph state definitions and data structures  
-- `prompts.py` - System prompts and prompt templates
-- `utils.py` - Utility functions and helpers
-- `files/` - Research output and example files
+### Core Implementation (`src/deepsearch/`)
 
-### Legacy Implementations (`src/legacy/`)
-Contains two earlier research implementations:
-- `graph.py` - Plan-and-execute workflow with human-in-the-loop
-- `multi_agent.py` - Supervisor-researcher multi-agent architecture
-- `legacy.md` - Documentation for legacy implementations
-- `CLAUDE.md` - Legacy-specific Claude instructions
-- `tests/` - Legacy-specific tests
+#### Main Modules
+- `cli.py` - Command-line interface entry point
+- `config.py` - Configuration management
+- `state.py` - State definitions for research workflow
+- `storage.py` - Data persistence layer
+- `workflow.py` - Main research workflow orchestration
 
-### Security (`src/security/`)
-- `auth.py` - Authentication handler for LangGraph deployment
+#### Agents (`src/deepsearch/agents/`)
+- `planner.py` - Research planning agent
+- `researcher.py` - Information gathering agent
+- `reflector.py` - Quality assessment and reflection
+- `verifier.py` - Source verification agent
+- `writer.py` - Report generation agent
 
-### Testing (`tests/`)
-- `run_evaluate.py` - Main evaluation script configured to run on deep research bench
-- `evaluators.py` - Specialized evaluation functions  
-- `prompts.py` - Evaluation prompts and criteria
-- `pairwise_evaluation.py` - Comparative evaluation tools
-- `supervisor_parallel_evaluation.py` - Multi-threaded evaluation
+#### Search (`src/deepsearch/search/`)
+- `base.py` - Base search interface
+- `tavily.py` - Tavily search integration
+- `openrouter.py` - OpenRouter search integration
+
+#### Output (`src/deepsearch/output/`)
+- `formatters.py` - Output formatting utilities
+- `report.py` - Report generation
 
 ### Examples (`examples/`)
-- `arxiv.md` - ArXiv research example
-- `pubmed.md` - PubMed research example
-- `inference-market.md` - Inference market analysis examples
+- Research output examples (arxiv.md, pubmed.md, etc.)
 
 ## Key Technologies
-- **LangGraph** - Workflow orchestration and graph execution
-- **LangChain** - LLM integration and tool calling
-- **Multiple LLM Providers** - OpenAI, Anthropic, Google, Groq, DeepSeek support
-- **Search APIs** - Tavily, OpenAI/Anthropic native search, DuckDuckGo, Exa
-- **MCP Servers** - Model Context Protocol for extended capabilities
+- **LangGraph** - Workflow orchestration
+- **LangChain** - LLM integration
+- **Rich** - Terminal UI
+- **Click** - CLI framework
+- **Tavily** - Web search API
 
 ## Development Commands
-- `uvx langgraph dev` - Start development server with LangGraph Studio
-- `python tests/run_evaluate.py` - Run comprehensive evaluations
-- `ruff check` - Code linting
-- `mypy` - Type checking
+```bash
+# Install dependencies
+uv sync
+
+# Run CLI
+deepsearch "your research question"
+# or
+ds "your research question"
+
+# Code linting
+ruff check src/
+
+# Type checking
+mypy src/
+```
 
 ## Configuration
-All settings configurable via:
-- Environment variables (`.env` file)
-- Web UI in LangGraph Studio
-- Direct configuration modification
-
-Key settings include model selection, search API choice, concurrency limits, and MCP server configurations.
+Settings via environment variables (`.env` file):
+- `OPENAI_API_KEY` - OpenAI API key
+- `TAVILY_API_KEY` - Tavily search API key
+- Model and search provider settings
