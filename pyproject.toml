@@ -36,13 +36,15 @@ dev = [
 [project.scripts]
 deepsearch = "deepsearch.cli:main"
 ds = "deepsearch.cli:main"
+deepthink = "deep_thinking.cli:main"
+dt = "deep_thinking.cli:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/deepsearch"]
+packages = ["src/deepsearch", "src/deep_thinking"]
 
 [tool.ruff]
 line-length = 100
